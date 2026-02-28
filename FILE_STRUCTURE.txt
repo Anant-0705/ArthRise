@@ -1,0 +1,339 @@
+📦 ARTHRISE - COMPLETE PROJECT STRUCTURE
+================================================================================
+
+arthrise/
+│
+├── 📄 README.md                          # Main project documentation
+├── 📄 SETUP_GUIDE.md                    # Step-by-step setup instructions  
+├── 📄 API_DOCUMENTATION.md              # Complete API reference
+├── 📄 PROJECT_SUMMARY.md                # Overview & quick start
+├── 📄 QUICK_REFERENCE.md                # Commands & troubleshooting
+├── 🔧 install.bat                       # Windows auto-installer
+│
+├── 📂 server/                           # BACKEND (Node.js + Express) 🟢
+│   │
+│   ├── 📂 config/
+│   │   └── db.js                        # MongoDB connection setup
+│   │
+│   ├── 📂 controllers/                  # Business Logic Layer
+│   │   ├── orderController.js           # Order CRUD operations
+│   │   ├── portfolioController.js       # Portfolio calculations
+│   │   ├── stockController.js           # Stock management
+│   │   ├── transactionController.js     # Buy/Sell logic
+│   │   ├── userController.js            # User auth & profile
+│   │   └── watchlistController.js       # Watchlist operations
+│   │
+│   ├── 📂 middleware/
+│   │   └── authMiddleware.js            # JWT verification & role check
+│   │
+│   ├── 📂 models/                       # MongoDB Schemas
+│   │   ├── Order.js                     # Order schema
+│   │   ├── Portfolio.js                 # User holdings
+│   │   ├── Stock.js                     # Stock data
+│   │   ├── Transaction.js               # Transaction history
+│   │   ├── User.js                      # User accounts (with bcrypt)
+│   │   └── Watchlist.js                 # User watchlists
+│   │
+│   ├── 📂 routes/                       # API Routes
+│   │   ├── orderRoutes.js               # /api/orders
+│   │   ├── portfolioRoutes.js           # /api/portfolio
+│   │   ├── stockRoutes.js               # /api/stocks
+│   │   ├── transactionRoutes.js         # /api/transactions
+│   │   ├── userRoutes.js                # /api/users
+│   │   └── watchlistRoutes.js           # /api/watchlist
+│   │
+│   ├── 📄 server.js                     # ⭐ Entry point - Express server
+│   ├── 📄 seedStocks.js                 # Database seeder (10 stocks)
+│   ├── 📄 package.json                  # Dependencies & scripts
+│   ├── 📄 .env                          # 🔐 Environment variables
+│   ├── 📄 .env.example                  # Environment template
+│   └── 📄 .gitignore                    # Git ignore rules
+│
+└── 📂 client/                           # FRONTEND (React + Vite) ⚛️
+    │
+    ├── 📂 public/                       # Static assets
+    │
+    ├── 📂 src/
+    │   │
+    │   ├── 📂 components/               # Reusable Components
+    │   │   ├── axiosInstance.js         # 🔧 Axios config with interceptors
+    │   │   ├── Login.jsx                # Login form
+    │   │   ├── Register.jsx             # Registration form
+    │   │   └── Navbar.jsx               # Navigation bar
+    │   │
+    │   ├── 📂 context/                  # State Management
+    │   │   └── GeneralContext.jsx       # 🌐 Global state (user, auth)
+    │   │
+    │   ├── 📂 pages/                    # Page Components
+    │   │   ├── Landing.jsx              # 🏠 Landing page (/)
+    │   │   ├── Home.jsx                 # 📊 Dashboard - Stock list
+    │   │   ├── Portfolio.jsx            # 💼 User portfolio & P/L
+    │   │   ├── History.jsx              # 📜 Transaction history
+    │   │   ├── Profile.jsx              # 👤 User profile & settings
+    │   │   ├── StockChart.jsx           # 📈 Stock charts (placeholder)
+    │   │   │
+    │   │   └── 📂 Admin Pages/          # 👑 Admin Only
+    │   │       ├── Admin.jsx            # Manage stocks (CRUD)
+    │   │       ├── AdminStockChart.jsx  # Admin analytics
+    │   │       ├── Users.jsx            # Manage users
+    │   │       ├── AllOrders.jsx        # View all orders
+    │   │       └── AllTransactions.jsx  # View all transactions
+    │   │
+    │   ├── 📄 App.jsx                   # ⭐ Main app with React Router
+    │   ├── 📄 main.jsx                  # React entry point
+    │   └── 📄 index.css                 # Global styles
+    │
+    ├── 📄 index.html                    # HTML template
+    ├── 📄 package.json                  # Dependencies & scripts
+    ├── 📄 vite.config.js                # ⚙️ Vite config with proxy
+    ├── 📄 .eslintrc.cjs                 # ESLint configuration
+    └── 📄 .gitignore                    # Git ignore rules
+
+================================================================================
+
+🎯 KEY FILES TO KNOW
+================================================================================
+
+📌 BACKEND ENTRY POINT
+   server/server.js                      # Start here to understand backend flow
+
+📌 FRONTEND ENTRY POINT  
+   client/src/main.jsx → App.jsx         # Start here to understand frontend flow
+
+📌 CONFIGURATION FILES
+   server/.env                           # Backend config (PORT, MONGO_URI, JWT_SECRET)
+   client/vite.config.js                 # Frontend config (proxy settings)
+
+📌 DATABASE SETUP
+   server/seedStocks.js                  # Run: npm run seed
+
+📌 AUTHENTICATION
+   server/middleware/authMiddleware.js   # JWT protection logic
+   client/src/components/axiosInstance.js # Auto-attach JWT tokens
+
+📌 STATE MANAGEMENT
+   client/src/context/GeneralContext.jsx # User state & auth functions
+
+================================================================================
+
+🔗 DATA FLOW
+================================================================================
+
+USER REGISTRATION:
+  Register.jsx → POST /api/users/register → userController.registerUser 
+  → User.create() → Return JWT token → Save to localStorage
+
+USER LOGIN:
+  Login.jsx → POST /api/users/login → userController.loginUser 
+  → User.matchPassword() → Return JWT token → Save to localStorage
+
+BUY STOCK:
+  Home.jsx → POST /api/transactions/buy → transactionController.buyStock
+  → 1. Check balance
+  → 2. Deduct from user.balance
+  → 3. Create transaction
+  → 4. Update portfolio
+  → Return transaction data
+
+GET PORTFOLIO:
+  Portfolio.jsx → GET /api/portfolio → portfolioController.getUserPortfolio
+  → Portfolio.find({ user }) → Populate stock data → Calculate P/L → Return
+
+================================================================================
+
+📊 DATABASE SCHEMA RELATIONSHIPS
+================================================================================
+
+User (1) ──────< (Many) Transaction
+User (1) ──────< (Many) Portfolio
+User (1) ──────< (Many) Order
+User (1) ──────< (Many) Watchlist
+
+Stock (1) ─────< (Many) Transaction
+Stock (1) ─────< (Many) Portfolio
+Stock (1) ─────< (Many) Order
+Stock (1) ─────< (Many) Watchlist
+
+================================================================================
+
+🌐 ROUTES & PAGES
+================================================================================
+
+PUBLIC ROUTES (No Auth):
+  /                              → Landing.jsx
+  /login                         → Login.jsx
+  /register                      → Register.jsx
+
+PROTECTED ROUTES (Requires Auth):
+  /home                          → Home.jsx (Stock Dashboard)
+  /portfolio                     → Portfolio.jsx
+  /history                       → History.jsx
+  /profile                       → Profile.jsx
+
+ADMIN ROUTES (Requires Auth + Admin Role):
+  /admin                         → Admin.jsx
+  /users                         → Users.jsx
+  /all-orders                    → AllOrders.jsx
+  /all-transactions              → AllTransactions.jsx
+
+================================================================================
+
+🔐 MIDDLEWARE & PROTECTION
+================================================================================
+
+authMiddleware.protect:
+  → Extracts JWT from Authorization header
+  → Verifies token with JWT_SECRET
+  → Attaches user to req.user
+  → Used on all protected routes
+
+authMiddleware.admin:
+  → Checks if req.user.role === 'admin'
+  → Used on admin-only routes
+  → Returns 403 if not admin
+
+Route Protection Example:
+  router.get('/portfolio', protect, getUserPortfolio)
+  router.get('/users', protect, admin, getAllUsers)
+
+================================================================================
+
+📦 DEPENDENCIES
+================================================================================
+
+BACKEND (server/package.json):
+  express                        # Web framework
+  mongoose                       # MongoDB ODM
+  bcryptjs                       # Password hashing
+  jsonwebtoken                   # JWT generation/verification
+  cors                           # Cross-origin requests
+  dotenv                         # Environment variables
+  nodemon (dev)                  # Auto-restart server
+
+FRONTEND (client/package.json):
+  react                          # UI library
+  react-dom                      # React DOM rendering
+  react-router-dom               # Routing
+  axios                          # HTTP client
+  react-toastify                 # Toast notifications
+  chart.js                       # Charts (future use)
+  react-chartjs-2                # React wrapper for Chart.js
+  bootstrap                      # CSS framework
+  vite                           # Build tool
+
+================================================================================
+
+🚀 RUNNING THE APPLICATION
+================================================================================
+
+TERMINAL 1 (Backend):
+  cd server
+  npm install                    # First time only
+  npm run seed                   # First time only (adds stocks)
+  npm run dev                    # Starts server on port 8000
+
+TERMINAL 2 (Frontend):
+  cd client
+  npm install                    # First time only
+  npm run dev                    # Starts Vite dev server on port 5173
+
+BROWSER:
+  Open http://localhost:5173
+
+================================================================================
+
+✅ CHECKLIST
+================================================================================
+
+Before starting:
+  ☐ MongoDB installed and running (port 27017)
+  ☐ Node.js installed (v16+)
+  ☐ npm installed
+
+Initial setup:
+  ☐ Run npm install in server/
+  ☐ Run npm install in client/
+  ☐ Update .env if needed (MongoDB URI, JWT secret)
+  ☐ Run npm run seed in server/ to add stocks
+
+Running:
+  ☐ Start MongoDB
+  ☐ Start backend (npm run dev in server/)
+  ☐ Start frontend (npm run dev in client/)
+  ☐ Open browser to http://localhost:5173
+
+Testing:
+  ☐ Register a new account
+  ☐ Buy a stock
+  ☐ Check portfolio
+  ☐ View transaction history
+  ☐ Update profile
+
+Admin testing:
+  ☐ Create admin user in MongoDB
+  ☐ Login as admin
+  ☐ Add/edit/delete stocks
+  ☐ View all users
+  ☐ Monitor all transactions
+
+================================================================================
+
+🎓 LEARNING PATH
+================================================================================
+
+1. START HERE:
+   - Read PROJECT_SUMMARY.md
+   - Follow SETUP_GUIDE.md
+   - Get app running
+
+2. UNDERSTAND BACKEND:
+   - server/server.js → See Express setup
+   - server/models/ → Understand schemas
+   - server/controllers/ → See business logic
+   - server/routes/ → See API endpoints
+
+3. UNDERSTAND FRONTEND:
+   - client/src/main.jsx → Entry point
+   - client/src/App.jsx → Routing setup
+   - client/src/context/GeneralContext.jsx → State management
+   - client/src/components/ → Reusable components
+   - client/src/pages/ → Page components
+
+4. TRACE A FEATURE:
+   Pick "Buy Stock" and follow the complete flow:
+   - Frontend: Home.jsx (Buy button)
+   - API call: axiosInstance.post('/transactions/buy')
+   - Backend: transactionRoutes.js → transactionController.buyStock
+   - Database: Update User, Transaction, Portfolio
+   - Response: Return to frontend
+   - UI update: Refresh balance, show toast
+
+5. CUSTOMIZE:
+   - Add new stocks in seedStocks.js
+   - Change starting balance in User model
+   - Add new features (watchlist, charts, etc.)
+
+================================================================================
+
+📚 DOCUMENTATION FILES
+================================================================================
+
+README.md                        # Project overview & features
+SETUP_GUIDE.md                   # Detailed setup with troubleshooting
+API_DOCUMENTATION.md             # Complete API reference with examples
+PROJECT_SUMMARY.md               # Quick start & feature list
+QUICK_REFERENCE.md               # Commands, troubleshooting, tips
+FILE_STRUCTURE.txt (this file)   # Complete project structure guide
+
+================================================================================
+
+🎉 YOU'RE READY TO START!
+================================================================================
+
+Next steps:
+1. Open SETUP_GUIDE.md
+2. Follow the installation steps
+3. Start both servers
+4. Register and start trading!
+
+Happy Coding! 🚀
