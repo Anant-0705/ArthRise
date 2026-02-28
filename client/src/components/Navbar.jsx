@@ -94,7 +94,7 @@ const Navbar = () => {
 
             {user ? (
               <div className="d-flex align-items-center gap-3">
-                <span className="text-white-50 small">Balance: <strong className="text-white">${user.balance?.toLocaleString()}</strong></span>
+                <span className="text-white-50 small navbar-balance">Balance: <strong className="text-white">${user.balance?.toLocaleString()}</strong></span>
                 <i className="bi bi-person text-white-50 fs-5 cursor-pointer hover-white" title="Profile"></i>
                 <button className="btn btn-outline-light btn-sm rounded-pill px-3" onClick={handleLogout}>
                   Logout

@@ -201,3 +201,138 @@ code {
 .min-vh-100 {
   min-height: 100vh;
 }
+
+/* ───────────────────────────────────────────
+   RESPONSIVE / MOBILE
+─────────────────────────────────────────── */
+
+/* Tables — stack as cards on small devices */
+@media (max-width: 767.98px) {
+  /* Hide exchange column on stock table */
+  .table .col-exchange { display: none; }
+
+  /* Table-card layout for portfolio / history */
+  .table-mobile-cards thead {
+    display: none;
+  }
+  .table-mobile-cards tbody tr {
+    display: block;
+    background: rgba(255,255,255,0.04) !important;
+    border-radius: var(--radius-md);
+    margin-bottom: 0.75rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color) !important;
+  }
+  .table-mobile-cards tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 0 !important;
+    border: none !important;
+    font-size: 0.875rem;
+  }
+  .table-mobile-cards tbody td::before {
+    content: attr(data-label);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    margin-right: 1rem;
+  }
+
+  /* Tighter page padding on mobile */
+  .container, .container-fluid {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Smaller headings */
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+  h4 { font-size: 1.1rem !important; }
+
+  /* Page vertical padding */
+  .page-section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Aesthetic card padding */
+  .aesthetic-card.p-4 { padding: 1rem !important; }
+  .aesthetic-card.p-5 { padding: 1.25rem !important; }
+
+  /* Stat tiles — 2-up */
+  .stat-tiles .col-6 {
+    padding: 0.4rem !important;
+  }
+
+  /* Action buttons row in Home */
+  .home-actions {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+  .home-actions > div {
+    flex-wrap: wrap;
+    gap: 0.5rem !important;
+  }
+
+  /* Modal full-width on mobile */
+  .modal-dialog {
+    margin: 0.5rem;
+  }
+
+  /* Balance in navbar — shorten */
+  .navbar-balance { display: none !important; }
+
+  /* Landing hero */
+  .landing-hero-title {
+    font-size: 2.6rem !important;
+    line-height: 1.1 !important;
+  }
+  .landing-hero-sub {
+    font-size: 1rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .landing-cta-btn {
+    padding: 0.75rem 2rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* Navbar mobile menu dark bg */
+  .navbar-collapse.show,
+  .navbar-collapse.collapsing {
+    background: rgba(5,5,16,0.97);
+    border-radius: 0 0 12px 12px;
+    padding: 1rem 0.5rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 0.5rem;
+  }
+  .navbar-collapse .nav-link {
+    padding: 0.6rem 1rem !important;
+    font-size: 1rem !important;
+  }
+  .navbar-collapse .d-flex.align-items-center {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem 0.5rem 0;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .landing-hero-title {
+    font-size: 2rem !important;
+  }
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+  .btn-sm {
+    padding: 0.3rem 0.75rem !important;
+    font-size: 0.8rem !important;
+  }
+}

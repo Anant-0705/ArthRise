@@ -96,8 +96,8 @@ const Home = () => {
   );
 
   return (
-    <div className="container py-5">
-      <div className="d-flex justify-content-between align-items-end mb-4">
+    <div className="container py-4 py-md-5">
+      <div className="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-3 home-actions">
         <div>
           <h2 className="mb-0">Stock Market</h2>
           {lastUpdate && (
@@ -108,7 +108,7 @@ const Home = () => {
           )}
         </div>
         
-        <div className="d-flex align-items-center gap-3">
+        <div className="d-flex flex-wrap align-items-center gap-3">
           <div className="form-check form-switch m-0 pt-1">
             <input
               className="form-check-input"
@@ -168,7 +168,7 @@ const Home = () => {
                   <th>Company</th>
                   <th>Price</th>
                   <th>Change</th>
-                  <th>Exchange</th>
+                  <th className="d-none d-md-table-cell">Exchange</th>
                   <th className="text-end pe-4 rounded-top-end">Actions</th>
                 </tr>
               </thead>
@@ -192,12 +192,12 @@ const Home = () => {
                         {Math.abs(stock.changePercent).toFixed(2)}%
                       </span>
                     </td>
-                    <td>
+                    <td className="d-none d-md-table-cell">
                       <span className="text-muted small">{stock.exchange}</span>
                     </td>
                     <td className="text-end pe-4">
                       <button
-                        className="btn btn-sm rounded-pill px-4 me-2 fw-semibold"
+                        className="btn btn-sm rounded-pill px-2 px-md-4 me-1 me-md-2 fw-semibold"
                         style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.15)' }}
                         data-bs-toggle="modal"
                         data-bs-target="#transactionModal"
@@ -209,7 +209,7 @@ const Home = () => {
                         Buy
                       </button>
                       <button
-                        className="btn btn-sm rounded-pill px-4 fw-semibold"
+                        className="btn btn-sm rounded-pill px-2 px-md-4 fw-semibold"
                         style={{ background: 'transparent', color: '#ef4444', border: '1px solid rgba(239,68,68,0.4)' }}
                         data-bs-toggle="modal"
                         data-bs-target="#transactionModal"

@@ -33,7 +33,7 @@ const Portfolio = () => {
   };
 
   return (
-    <div className="container py-5">
+    <div className="container py-4 py-md-5">
       <h2 className="mb-4 text-white fw-bold">My Portfolio</h2>
 
       {summary && (
@@ -66,7 +66,8 @@ const Portfolio = () => {
           Your portfolio is empty. Start trading to see your holdings here.
         </div>
       ) : (
-        <div className="aesthetic-card overflow-hidden">
+        {/* Desktop table */}
+        <div className="aesthetic-card overflow-hidden d-none d-md-block">
           <div className="table-responsive">
             <table className="table table-hover mb-0 align-middle">
               <thead>
@@ -109,6 +110,47 @@ const Portfolio = () => {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Mobile cards */}
+        <div className="d-md-none">
+          {portfolio.map((item) => (
+            <div key={item._id} className="aesthetic-card p-3 mb-3">
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <span className="px-2 py-1 rounded fw-bold" style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', fontSize: '0.9rem', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  {item.stock.symbol}
+                </span>
+                <span className={`badge px-2 py-1 rounded-pill fs-6 ${item.profitLossPercent >= 0 ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'}`}>
+                  {item.profitLossPercent >= 0 ? '+' : ''}{item.profitLossPercent.toFixed(2)}%
+                </span>
+              </div>
+              <p className="text-muted small mb-2">{item.stock.name}</p>
+              <div className="row g-2 text-center">
+                <div className="col-4">
+                  <div className="text-muted" style={{fontSize:'0.7rem',textTransform:'uppercase',letterSpacing:'0.05em'}}>Qty</div>
+                  <div className="text-white fw-semibold">{item.quantity}</div>
+                </div>
+                <div className="col-4">
+                  <div className="text-muted" style={{fontSize:'0.7rem',textTransform:'uppercase',letterSpacing:'0.05em'}}>Curr. Price</div>
+                  <div className="text-white fw-semibold">${item.stock.currentPrice.toFixed(2)}</div>
+                </div>
+                <div className="col-4">
+                  <div className="text-muted" style={{fontSize:'0.7rem',textTransform:'uppercase',letterSpacing:'0.05em'}}>P/L</div>
+                  <div className={item.profitLoss >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold'}>
+                    {item.profitLoss >= 0 ? '+' : ''}${item.profitLoss.toFixed(2)}
+                  </div>
+                </div>
+                <div className="col-6">
+                  <div className="text-muted" style={{fontSize:'0.7rem',textTransform:'uppercase',letterSpacing:'0.05em'}}>Invested</div>
+                  <div className="text-muted">${item.totalInvested.toFixed(2)}</div>
+                </div>
+                <div className="col-6">
+                  <div className="text-muted" style={{fontSize:'0.7rem',textTransform:'uppercase',letterSpacing:'0.05em'}}>Value</div>
+                  <div className="text-white">${item.currentValue.toFixed(2)}</div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
