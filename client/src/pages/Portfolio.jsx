@@ -66,8 +66,9 @@ const Portfolio = () => {
           Your portfolio is empty. Start trading to see your holdings here.
         </div>
       ) : (
-        {/* Desktop table */}
-        <div className="aesthetic-card overflow-hidden d-none d-md-block">
+        <>
+          {/* Desktop table */}
+          <div className="aesthetic-card overflow-hidden d-none d-md-block">
           <div className="table-responsive">
             <table className="table table-hover mb-0 align-middle">
               <thead>
@@ -152,6 +153,7 @@ const Portfolio = () => {
             </div>
           ))}
         </div>
+        </>
       )}
     </div>
   );

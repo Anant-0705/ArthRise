@@ -159,74 +159,96 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        <div className="aesthetic-card">
-          <div className="table-responsive">
-            <table className="table table-hover mb-0 align-middle">
-              <thead>
-                <tr>
-                  <th className="ps-4 rounded-top-start">Symbol</th>
-                  <th>Company</th>
-                  <th>Price</th>
-                  <th>Change</th>
-                  <th className="d-none d-md-table-cell">Exchange</th>
-                  <th className="text-end pe-4 rounded-top-end">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="border-top-0">
-                {filteredStocks.map((stock) => (
-                  <tr key={stock._id}>
-                    <td className="ps-4">
-                      <span className="px-2 py-1 rounded fw-bold" style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', fontSize: '0.9rem', letterSpacing: '0.03em', border: '1px solid rgba(255,255,255,0.12)' }}>
-                        {stock.symbol}
-                      </span>
-                    </td>
-                    <td className="fw-medium text-white">{stock.name}</td>
-                    <td className="fw-bold fs-5 text-white">${stock.currentPrice.toFixed(2)}</td>
-                    <td>
-                      <span
-                        className={`badge ${
-                          stock.changePercent >= 0 ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'
-                        } px-2 py-1 rounded-pill`}
-                      >
-                        <i className={`bi bi-arrow-${stock.changePercent >= 0 ? 'up' : 'down'}-short me-1`}></i>
-                        {Math.abs(stock.changePercent).toFixed(2)}%
-                      </span>
-                    </td>
-                    <td className="d-none d-md-table-cell">
-                      <span className="text-muted small">{stock.exchange}</span>
-                    </td>
-                    <td className="text-end pe-4">
-                      <button
-                        className="btn btn-sm rounded-pill px-2 px-md-4 me-1 me-md-2 fw-semibold"
-                        style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.15)' }}
-                        data-bs-toggle="modal"
-                        data-bs-target="#transactionModal"
-                        onClick={() => {
-                          setSelectedStock(stock);
-                          setTransactionType('buy');
-                        }}
-                      >
-                        Buy
-                      </button>
-                      <button
-                        className="btn btn-sm rounded-pill px-2 px-md-4 fw-semibold"
-                        style={{ background: 'transparent', color: '#ef4444', border: '1px solid rgba(239,68,68,0.4)' }}
-                        data-bs-toggle="modal"
-                        data-bs-target="#transactionModal"
-                        onClick={() => {
-                          setSelectedStock(stock);
-                          setTransactionType('sell');
-                        }}
-                      >
-                        Sell
-                      </button>
-                    </td>
+        <>
+          {/* Desktop table */}
+          <div className="aesthetic-card d-none d-md-block">
+            <div className="table-responsive">
+              <table className="table table-hover mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th className="ps-4 rounded-top-start">Symbol</th>
+                    <th>Company</th>
+                    <th>Price</th>
+                    <th>Change</th>
+                    <th className="d-none d-md-table-cell">Exchange</th>
+                    <th className="text-end pe-4 rounded-top-end">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="border-top-0">
+                  {filteredStocks.map((stock) => (
+                    <tr key={stock._id}>
+                      <td className="ps-4">
+                        <span className="px-2 py-1 rounded fw-bold" style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', fontSize: '0.9rem', letterSpacing: '0.03em', border: '1px solid rgba(255,255,255,0.12)' }}>
+                          {stock.symbol}
+                        </span>
+                      </td>
+                      <td className="fw-medium text-white">{stock.name}</td>
+                      <td className="fw-bold fs-5 text-white">${stock.currentPrice.toFixed(2)}</td>
+                      <td>
+                        <span className={`badge ${stock.changePercent >= 0 ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'} px-2 py-1 rounded-pill`}>
+                          <i className={`bi bi-arrow-${stock.changePercent >= 0 ? 'up' : 'down'}-short me-1`}></i>
+                          {Math.abs(stock.changePercent).toFixed(2)}%
+                        </span>
+                      </td>
+                      <td className="d-none d-md-table-cell">
+                        <span className="text-muted small">{stock.exchange}</span>
+                      </td>
+                      <td className="text-end pe-4">
+                        <button
+                          className="btn btn-sm rounded-pill px-4 me-2 fw-semibold"
+                          style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.15)' }}
+                          data-bs-toggle="modal" data-bs-target="#transactionModal"
+                          onClick={() => { setSelectedStock(stock); setTransactionType('buy'); }}
+                        >Buy</button>
+                        <button
+                          className="btn btn-sm rounded-pill px-4 fw-semibold"
+                          style={{ background: 'transparent', color: '#ef4444', border: '1px solid rgba(239,68,68,0.4)' }}
+                          data-bs-toggle="modal" data-bs-target="#transactionModal"
+                          onClick={() => { setSelectedStock(stock); setTransactionType('sell'); }}
+                        >Sell</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+
+          {/* Mobile cards */}
+          <div className="d-md-none">
+            {filteredStocks.map((stock) => (
+              <div key={stock._id} className="aesthetic-card p-3 mb-3">
+                <div className="d-flex justify-content-between align-items-center mb-1">
+                  <span className="px-2 py-1 rounded fw-bold" style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', fontSize: '0.9rem', letterSpacing: '0.04em', border: '1px solid rgba(255,255,255,0.12)' }}>
+                    {stock.symbol}
+                  </span>
+                  <span className={`badge ${stock.changePercent >= 0 ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'} px-2 py-1 rounded-pill`}>
+                    <i className={`bi bi-arrow-${stock.changePercent >= 0 ? 'up' : 'down'}-short me-1`}></i>
+                    {Math.abs(stock.changePercent).toFixed(2)}%
+                  </span>
+                </div>
+                <p className="text-muted small mb-2 mt-1" style={{fontSize:'0.8rem'}}>{stock.name}</p>
+                <div className="d-flex justify-content-between align-items-center">
+                  <span className="fw-bold text-white" style={{fontSize:'1.3rem'}}>${stock.currentPrice.toFixed(2)}</span>
+                  <div className="d-flex gap-2">
+                    <button
+                      className="btn btn-sm rounded-pill px-3 fw-semibold"
+                      style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.15)' }}
+                      data-bs-toggle="modal" data-bs-target="#transactionModal"
+                      onClick={() => { setSelectedStock(stock); setTransactionType('buy'); }}
+                    >Buy</button>
+                    <button
+                      className="btn btn-sm rounded-pill px-3 fw-semibold"
+                      style={{ background: 'transparent', color: '#ef4444', border: '1px solid rgba(239,68,68,0.4)' }}
+                      data-bs-toggle="modal" data-bs-target="#transactionModal"
+                      onClick={() => { setSelectedStock(stock); setTransactionType('sell'); }}
+                    >Sell</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
       {/* Transaction Modal */}
